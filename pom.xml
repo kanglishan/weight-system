@@ -36,9 +36,9 @@
             <scope>test</scope>
         </dependency>
         <dependency>
-            <groupId>org.rxtx</groupId>
-            <artifactId>rxtxcomm</artifactId>
-            <version>2.0-7pre1</version>
+            <groupId>cxp-rxtxcomm</groupId>
+            <artifactId>RXTXcomm</artifactId>
+            <version>1.0.0</version>
         </dependency>
     </dependencies>
 
