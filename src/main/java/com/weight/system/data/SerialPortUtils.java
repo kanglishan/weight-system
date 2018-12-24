@@ -1,7 +1,15 @@
 package com.weight.system.data;
 
-import gnu.io.*;
+import gnu.io.CommPortIdentifier;
+import gnu.io.PortInUseException;
+import gnu.io.SerialPort;
+import gnu.io.SerialPortEvent;
+import gnu.io.SerialPortEventListener;
+import gnu.io.UnsupportedCommOperationException;
+import org.springframework.stereotype.Service;
 
+import javax.annotation.PostConstruct;
+import javax.annotation.Resource;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
@@ -10,9 +18,14 @@ import java.util.TooManyListenersException;
 
 /**
  * 串口参数的配置 串口一般有如下参数可以在该串口打开以前进行配置： 包括串口号，波特率，输入/输出流控制，数据位数，停止位和奇偶校验。
+ * 注：串口操作类一定要继承SerialPortEventListener
  */
-// 注：串口操作类一定要继承SerialPortEventListener
+@Service
 public class SerialPortUtils implements SerialPortEventListener {
+
+    @Resource
+    private DataStoreService dataStoreService;
+
     // 检测系统中可用的通讯端口类
     private CommPortIdentifier commPortId;
     // 枚举类型
@@ -38,8 +51,13 @@ public class SerialPortUtils implements SerialPortEventListener {
      * @param: paramConfig  存放串口连接必要参数的对象（会在下方给出类代码）
      * @return: void
      */
-    @SuppressWarnings("unchecked")
-    public void init(ParamConfig paramConfig) {
+    @PostConstruct
+    public void init(){
+        ParamConfig config = new ParamConfig("COM4",9600,0,8,1);
+        initConifg(config);
+    }
+
+    public void initConifg(ParamConfig paramConfig) {
         // 获取系统中所有的通讯端口
         portList = CommPortIdentifier.getPortIdentifiers();
         // 记录是否含有指定串口
@@ -56,7 +74,7 @@ public class SerialPortUtils implements SerialPortEventListener {
                     // 打开串口
                     try {
                         // open:（应用程序名【随意命名】，阻塞时等待的毫秒数）
-                        serialPort = (SerialPort) commPortId.open(Object.class.getSimpleName(), 5000);
+                        serialPort = (SerialPort) commPortId.open(Object.class.getSimpleName(), 2000);
                         // 设置串口监听
                         serialPort.addEventListener(this);
                         // 设置串口数据时间有效(可监听)
@@ -126,6 +144,7 @@ public class SerialPortUtils implements SerialPortEventListener {
                 data = new String(readBuffer, 0, len).trim();
                 // 转为十六进制数据
                 dataHex = bytesToHexString(readBuffer);
+                dataStoreService.setWeightData(data);
                 System.out.println("data:" + data);
                 System.out.println("dataHex:" + dataHex);// 读取后置空流对象
                 inputStream.close();
