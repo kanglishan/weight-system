@@ -9,7 +9,7 @@ public class Test {
         // 创建串口必要参数接收类并赋值，赋值串口号，波特率，校验位，数据位，停止位
         ParamConfig paramConfig = new ParamConfig("COM4", 9600, 0, 8, 1);
         // 初始化设置,打开串口，开始监听读取串口数据
-        serialPort.init(paramConfig);
+        serialPort.initConifg(paramConfig);
 
         try {
             TimeUnit.MINUTES.sleep(10);

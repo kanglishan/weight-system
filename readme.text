@@ -5,3 +5,4 @@
 
 mvn install:install-file -Dfile=C:\workspace\weight-system\lib\RXTXcomm.jar -DgroupId=cxp-rxtxcomm -DartifactId=RXTXcomm -Dversion=1.0.0 -Dpackaging=jar
 
+
