@@ -1,5 +1,6 @@
 package com.weight.system.data;
 
+import org.apache.commons.lang3.StringUtils;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -15,7 +16,11 @@ public class WeightDataControl {
     private DataStoreService dataStoreService;
 
     @RequestMapping("/weight/getWeightedData")
-    public String getWeightedData() {
-        return dataStoreService.getWeightData() +"";
+    public CxpResponse<String> getWeightedData() {
+        String ret = dataStoreService.getWeightData() +"";
+        if (StringUtils.isEmpty(ret)){
+            return new CxpResponse<>(0+"");
+        }
+        return new CxpResponse<String>(ret);
     }
 }
