@@ -1,6 +1,5 @@
 package com.weight.system.data;
 
-import org.apache.commons.lang3.math.NumberUtils;
 import org.springframework.stereotype.Service;
 import org.springframework.util.StringUtils;
 
@@ -33,12 +32,13 @@ public class DataStoreService {
             weightData = weightData.replace("kg", "").trim();
             weightData = weightData.replace("g", "").trim();
             weightData = weightData.replace("\"", "").trim();
-            if(NumberUtils.isDigits(weightData)){
-                this.weightData = Double.parseDouble(weightData);
+            try {
+                Double.parseDouble(weightData);
+            }catch (Exception e){
+                System.out.println(" invalid data2:  "  + weightData);
+                return;
             }
-            else{
-                System.out.println(" invalid data:  "  + weightData);
-            }
+            this.weightData = Double.parseDouble(weightData);
         }
     }
 
