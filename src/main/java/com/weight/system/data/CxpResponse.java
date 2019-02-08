@@ -23,7 +23,7 @@ public class CxpResponse<T> {
 
     //Object不要是String类型
     public CxpResponse(T data){
-        this.errorNo = 200;
+        this.errorNo = 0;
         this.msg = "ok";
         this.data = data;
     }
