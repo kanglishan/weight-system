@@ -1,11 +1,6 @@
 package com.weight.system.data;
 
-import gnu.io.CommPortIdentifier;
-import gnu.io.PortInUseException;
-import gnu.io.SerialPort;
-import gnu.io.SerialPortEvent;
-import gnu.io.SerialPortEventListener;
-import gnu.io.UnsupportedCommOperationException;
+import gnu.io.*;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.PostConstruct;
