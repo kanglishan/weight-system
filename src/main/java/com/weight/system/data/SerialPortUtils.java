@@ -48,7 +48,7 @@ public class SerialPortUtils implements SerialPortEventListener {
      */
     @PostConstruct
     public void init(){
-        ParamConfig config = new ParamConfig("COM3",9600,0,8,1);
+        ParamConfig config = new ParamConfig("COM4",9600,0,8,1);
         initConifg(config);
     }
 
